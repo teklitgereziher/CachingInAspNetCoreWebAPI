@@ -1,4 +1,11 @@
 
+using Caching.DataAccess.Interfaces;
+using Caching.DataAccess.Repository;
+using Caching.DataContract.DbaseContext;
+using Caching.Shared.Services;
+using Caching.Shared.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
 namespace InMemoryCaching
 {
   public class Program
@@ -9,6 +16,14 @@ namespace InMemoryCaching
 
       // Add services to the container.
       builder.Services.AddMemoryCache();
+      builder.Services.AddScoped<IRepository, BaseRepository>();
+      builder.Services.AddScoped<ICsvReader, CsvReader>();
+      builder.Services.AddScoped<IBoardGameRepository, BoardGameRepository>();
+      builder.Services.AddDbContext<CachingDbContext>(options =>
+      {
+        options.UseNpgsql(
+          builder.Configuration.GetConnectionString("DbConnection"));
+      }, ServiceLifetime.Scoped);
 
       builder.Services.AddControllers();
       builder.Services.AddEndpointsApiExplorer();

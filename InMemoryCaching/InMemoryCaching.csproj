@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -16,7 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\Caching.DataAccess\Caching.DataAccess.csproj" />
+    <ProjectReference Include="..\Caching.DataContract\Caching.DataContract.csproj" />
+    <ProjectReference Include="..\Caching.Shared\Caching.Shared.csproj" />
   </ItemGroup>
 
 </Project>

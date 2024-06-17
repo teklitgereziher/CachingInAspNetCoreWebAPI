@@ -10,7 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{C50F07
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caching.DataContract", "Caching.DataContract\Caching.DataContract.csproj", "{0FD0F29D-4AAB-4A5F-9DDF-1416732D3D19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caching.DataContract", "Caching.DataContract\Caching.DataContract.csproj", "{0FD0F29D-4AAB-4A5F-9DDF-1416732D3D19}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caching.Shared", "Caching.Shared\Caching.Shared.csproj", "{E4A1AB27-1850-4912-B1E9-EA306B20DDCA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caching.DataAccess", "Caching.DataAccess\Caching.DataAccess.csproj", "{012D71A2-F83B-4F0B-9A35-BDD98EC84B67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +30,14 @@ Global
 		{0FD0F29D-4AAB-4A5F-9DDF-1416732D3D19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FD0F29D-4AAB-4A5F-9DDF-1416732D3D19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FD0F29D-4AAB-4A5F-9DDF-1416732D3D19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4A1AB27-1850-4912-B1E9-EA306B20DDCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4A1AB27-1850-4912-B1E9-EA306B20DDCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4A1AB27-1850-4912-B1E9-EA306B20DDCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4A1AB27-1850-4912-B1E9-EA306B20DDCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{012D71A2-F83B-4F0B-9A35-BDD98EC84B67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{012D71A2-F83B-4F0B-9A35-BDD98EC84B67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{012D71A2-F83B-4F0B-9A35-BDD98EC84B67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{012D71A2-F83B-4F0B-9A35-BDD98EC84B67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
