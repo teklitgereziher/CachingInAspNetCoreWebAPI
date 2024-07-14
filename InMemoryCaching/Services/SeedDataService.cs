@@ -1,5 +1,4 @@
 ﻿using Caching.DataAccess.Interfaces;
-using Caching.DataContract.DbaseContext;
 using Caching.DataContract.Models;
 using Caching.Shared.Services.Interfaces;
 using InMemoryCaching.Services.Interfaces;
@@ -9,16 +8,13 @@ namespace InMemoryCaching.Services
 {
   public class SeedDataService : ISeedDataService
   {
-    private readonly CachingDbContext _context;
     private IBoardGameRepository _boardGameRepo;
     private readonly ICsvReader _csvDataReader;
 
     public SeedDataService(
-      CachingDbContext context,
       IBoardGameRepository repository,
       ICsvReader csvDataReader)
     {
-      _context = context;
       _boardGameRepo = repository;
       _csvDataReader = csvDataReader;
     }
@@ -27,7 +23,7 @@ namespace InMemoryCaching.Services
     {
       var existingBoardGames = await _boardGameRepo.GetBoardGamesDictAsync();
       var now = DateTime.UtcNow;
-
+      var games = new List<BoardGame>();
       var records = _csvDataReader.Read();
 
       var skippedRows = 0;
@@ -54,14 +50,14 @@ namespace InMemoryCaching.Services
           UsersRated = record.UsersRated ?? 0,
           Year = record.YearPublished ?? 0
         };
-        _context.BoardGames.Add(boardgame);
+        games.Add(boardgame);
       }
 
-      await _context.SaveChangesAsync();
+      await _boardGameRepo.InsertBoardGamesAsync(games);
 
       return new JsonResult(new
       {
-        BoardGames = _context.BoardGames.Count(),
+        BoardGames = games.Count(),
         SkippedRows = skippedRows
       });
     }
