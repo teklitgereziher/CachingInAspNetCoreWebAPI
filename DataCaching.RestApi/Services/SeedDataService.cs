@@ -1,10 +1,10 @@
-﻿using Caching.DataAccess.Interfaces;
+using Caching.DataAccess.Interfaces;
 using Caching.DataContract.Models;
 using Caching.Shared.Services.Interfaces;
-using InMemoryCaching.Services.Interfaces;
+using DataCaching.RestApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InMemoryCaching.Services
+namespace DataCaching.RestApi.Services
 {
   public class SeedDataService : ISeedDataService
   {

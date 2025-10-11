@@ -3,11 +3,11 @@ using Caching.DataAccess.Repository;
 using Caching.DataContract.DbaseContext;
 using Caching.Shared.Services;
 using Caching.Shared.Services.Interfaces;
-using InMemoryCaching.Services;
-using InMemoryCaching.Services.Interfaces;
+using DataCaching.RestApi.Services;
+using DataCaching.RestApi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace InMemoryCaching
+namespace DataCaching.RestApi
 {
   public class Program
   {

@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="CsvHelper" Version="33.1.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageVersion>
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="9.0.6" />
+    <PackageVersion Include="System.Linq.Dynamic.Core" Version="1.6.9" />
+  </ItemGroup>
+</Project>

@@ -1,7 +1,7 @@
-﻿using InMemoryCaching.Services.Interfaces;
+using DataCaching.RestApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InMemoryCaching.Controllers
+namespace DataCaching.RestApi.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]

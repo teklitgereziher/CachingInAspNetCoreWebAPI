@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
-namespace InMemoryCaching.Services.Interfaces
+namespace DataCaching.RestApi.Services.Interfaces
 {
   public interface ISeedDataService
   {
