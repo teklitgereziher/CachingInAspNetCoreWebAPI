@@ -7,25 +7,18 @@ namespace DataCaching.RestApi.Controllers
   [ApiController]
   public class BoardGamesController : ControllerBase
   {
-    private readonly ICacheService cacheService;
+    private readonly IGameService gameService;
 
-    public BoardGamesController(ICacheService cacheService)
+    public BoardGamesController(IGameService gameService)
     {
-      this.cacheService = cacheService;
+      this.gameService = gameService;
     }
 
-    [HttpGet("{key}")]
-    public async Task<IActionResult> Get(string key)
+    [HttpGet("{boardGameId}")]
+    public async Task<IActionResult> GetBoardGame(int boardGameId)
     {
-      var value = await cacheService.GetValueAsync(key);
+      var value = await gameService.GetBoardGameAsync(boardGameId);
       return Ok(value);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Set([FromQuery] string key, [FromBody] string value)
-    {
-      await cacheService.SetValueAsync(key, value);
-      return Ok();
     }
   }
 }

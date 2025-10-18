@@ -22,7 +22,6 @@ namespace DataCaching.RestApi
       var pgSqlSettings = builder.Configuration.GetSection("PostgresSettings").Get<PostgresSettings>();
       builder.Services.Configure<AzureAdSettings>(builder.Configuration.GetSection("AzureAdSettings"));
       builder.Services.Configure<PostgresSettings>(builder.Configuration.GetSection("PostgresSettings"));
-      builder.Services.Configure<RedisSettings>(builder.Configuration.GetSection("RedisSettings"));
       builder.Services.AddMemoryCache();
       builder.Services.AddSingleton(new ClientSecretCredential(
         adSettings.TenantId,
@@ -31,27 +30,12 @@ namespace DataCaching.RestApi
       // Register Redis cache
       builder.Services.AddSingletonRedis(
         adSettings,
-        builder.Configuration.GetConnectionString("Redis:Host"),
+        builder.Configuration.GetSection("Redis:Host").Get<string>(),
         builder.Environment.IsDevelopment());
-      //builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
-      //{
-      //  if (builder.Environment.IsDevelopment())
-      //  {
-      //    return ConnectionMultiplexer.Connect(
-      //      builder.Configuration.GetConnectionString("Redis:Host"));
-      //  }
-      //  var configuration = ConfigurationOptions.Parse(
-      //    builder.Configuration.GetConnectionString("Redis"), true)
-      //  .ConfigureForAzureWithServicePrincipalAsync(
-      //    adSettings.ClientId,
-      //    adSettings.TenantId,
-      //    adSettings.ClientSecret).Result;
-      //  return ConnectionMultiplexer.Connect(configuration);
-      //});
 
-      builder.Services.AddScoped<RedisRepository>();
+      builder.Services.AddScoped<IRedisRepository, RedisRepository>();
       builder.Services.AddScoped<DbConnInterceptor>();
-      builder.Services.AddScoped<ICacheService, RedisCacheService>();
+      builder.Services.AddScoped<IGameService, GameService>();
       builder.Services.AddScoped<IRepository, BaseRepository>();
       builder.Services.AddScoped<ICsvReader, CsvReader>();
       builder.Services.AddScoped<IBoardGameRepository, BoardGameRepository>();
