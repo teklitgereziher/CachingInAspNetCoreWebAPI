@@ -19,3 +19,17 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: techuser@tech.com
       PGADMIN_DEFAULT_PASSWORD: mystrpass
+
+  redis:
+    image: redis:latest
+    container_name: redis_container
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - cachedb:/data
+    command: ["redis-server", "--appendonly", "yes"]
+
+volumes:
+  cachedb:
+    driver: local

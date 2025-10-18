@@ -8,7 +8,6 @@ using Caching.Shared.Services.Interfaces;
 using DataCaching.RestApi.Configurations;
 using DataCaching.RestApi.Services;
 using DataCaching.RestApi.Services.Interfaces;
-using StackExchange.Redis;
 
 namespace DataCaching.RestApi
 {
@@ -30,16 +29,25 @@ namespace DataCaching.RestApi
         adSettings.ClientId,
         adSettings.ClientSecret));
       // Register Redis cache
-      builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
-      {
-        var configuration = ConfigurationOptions.Parse(
-          builder.Configuration.GetConnectionString("Redis"), true)
-        .ConfigureForAzureWithServicePrincipalAsync(
-          adSettings.ClientId,
-          adSettings.TenantId,
-          adSettings.ClientSecret).Result;
-        return ConnectionMultiplexer.Connect(configuration);
-      });
+      builder.Services.AddSingletonRedis(
+        adSettings,
+        builder.Configuration.GetConnectionString("Redis:Host"),
+        builder.Environment.IsDevelopment());
+      //builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+      //{
+      //  if (builder.Environment.IsDevelopment())
+      //  {
+      //    return ConnectionMultiplexer.Connect(
+      //      builder.Configuration.GetConnectionString("Redis:Host"));
+      //  }
+      //  var configuration = ConfigurationOptions.Parse(
+      //    builder.Configuration.GetConnectionString("Redis"), true)
+      //  .ConfigureForAzureWithServicePrincipalAsync(
+      //    adSettings.ClientId,
+      //    adSettings.TenantId,
+      //    adSettings.ClientSecret).Result;
+      //  return ConnectionMultiplexer.Connect(configuration);
+      //});
 
       builder.Services.AddScoped<RedisRepository>();
       builder.Services.AddScoped<DbConnInterceptor>();

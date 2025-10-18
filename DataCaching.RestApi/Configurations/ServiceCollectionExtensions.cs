@@ -1,6 +1,7 @@
 using Caching.DataContract.ConfigOptions;
 using Caching.DataContract.DbaseContext;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 
 namespace DataCaching.RestApi.Configurations
 {
@@ -27,6 +28,28 @@ namespace DataCaching.RestApi.Configurations
         options.AddInterceptors(sp.GetRequiredService<DbConnInterceptor>());
       }, ServiceLifetime.Scoped);
 
+      return services;
+    }
+
+    public static IServiceCollection AddSingletonRedis(
+      this IServiceCollection services,
+      AzureAdSettings adSettings,
+      string host,
+      bool isDevelopment)
+    {
+      services.AddSingleton<IConnectionMultiplexer>(sp =>
+      {
+        if (isDevelopment)
+        {
+          return ConnectionMultiplexer.Connect(host);
+        }
+        var configuration = ConfigurationOptions.Parse(host, true)
+        .ConfigureForAzureWithServicePrincipalAsync(
+          adSettings.ClientId,
+          adSettings.TenantId,
+          adSettings.ClientSecret).Result;
+        return ConnectionMultiplexer.Connect(configuration);
+      });
       return services;
     }
   }

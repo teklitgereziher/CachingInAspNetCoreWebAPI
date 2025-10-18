@@ -12,6 +12,7 @@ namespace Caching.DataAccess.Repository
     private readonly RedisSettings redisSettings;
     private readonly AzureAdSettings adSettings;
     private readonly IConnectionMultiplexer connectionMultiplexer;
+    private IDatabase database;
 
     public RedisRepository(
       ClientSecretCredential clientSecretCredential,
@@ -22,20 +23,30 @@ namespace Caching.DataAccess.Repository
       credential = clientSecretCredential;
       redisSettings = redisOptions.Value;
       this.adSettings = adSettings.Value;
-      this.connectionMultiplexer = connectionMultiplexer;
+      database = connectionMultiplexer.GetDatabase();
     }
 
-    public IDatabase GetDatabaseAsync()
-    {
-      //var options = ConfigurationOptions.Parse(redisSettings.Host);
-      //options = options.ConfigureForAzureWithServicePrincipalAsync(
-      //  adSettings.ClientId,
-      //  adSettings.TenantId,
-      //  adSettings.ClientSecret).Result;
-      //using var connection = ConnectionMultiplexer.ConnectAsync(options).Result;
-      //return connection.GetDatabase();
+    //public IDatabase GetDatabaseAsync()
+    //{
+    //  //var options = ConfigurationOptions.Parse(redisSettings.Host);
+    //  //options = options.ConfigureForAzureWithServicePrincipalAsync(
+    //  //  adSettings.ClientId,
+    //  //  adSettings.TenantId,
+    //  //  adSettings.ClientSecret).Result;
+    //  //using var connection = ConnectionMultiplexer.ConnectAsync(options).Result;
+    //  //return connection.GetDatabase();
 
-      return connectionMultiplexer.GetDatabase();
+    //  return connectionMultiplexer.GetDatabase();
+    //}
+
+    public async Task<string> GetValueAsync(string key)
+    {
+      return await database.StringGetAsync(key);
+    }
+
+    public async Task SetValueAsync(string key, string value)
+    {
+      await database.StringSetAsync(key, value);
     }
   }
 }
