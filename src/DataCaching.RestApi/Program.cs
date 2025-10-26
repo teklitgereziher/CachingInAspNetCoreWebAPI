@@ -8,6 +8,7 @@ using Caching.Shared.Services.Interfaces;
 using DataCaching.RestApi.Configurations;
 using DataCaching.RestApi.Services;
 using DataCaching.RestApi.Services.Interfaces;
+using Serilog;
 
 namespace DataCaching.RestApi
 {
@@ -16,6 +17,8 @@ namespace DataCaching.RestApi
     public static void Main(string[] args)
     {
       var builder = WebApplication.CreateBuilder(args);
+      builder.Host.UseSerilog((context, services, configuration) =>
+        configuration.ReadFrom.Configuration(context.Configuration));
 
       // Add services to the container.
       var adSettings = builder.Configuration.GetSection("AzureAdSettings").Get<AzureAdSettings>();
