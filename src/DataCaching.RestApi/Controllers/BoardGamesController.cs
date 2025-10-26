@@ -30,6 +30,15 @@ namespace DataCaching.RestApi.Controllers
         var value = await gameService.GetBoardGameAsync(boardGameId);
         return Ok(value);
       }
+
+      //using (LogContext.PushProperty("MyTraceId", 1234))
+      //{
+      //  using (LogContext.PushProperty("BoardGameId", boardGameId))
+      //  {
+      //    logger.LogInformation("Fetching Board Game with Id: {BoardGameId}", boardGameId);
+      //    // ...etc
+      //  }
+      //}
     }
   }
 }
