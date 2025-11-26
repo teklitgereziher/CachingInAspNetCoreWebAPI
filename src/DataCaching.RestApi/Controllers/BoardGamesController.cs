@@ -1,3 +1,4 @@
+using DataCaching.RestApi.Models;
 using DataCaching.RestApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,6 +29,18 @@ namespace DataCaching.RestApi.Controllers
       {
         logger.LogInformation("Fetching Board Game with Id: {BoardGameId}", boardGameId);
         var value = await gameService.GetBoardGameAsync(boardGameId);
+        if (value == null)
+        {
+          logger.LogWarning("Board Game with Id: {BoardGameId} was not found.", boardGameId);
+          return Problem(
+            detail: $"Board Game with Id: {boardGameId} was not found.",
+            instance: HttpContext.Request.Path,
+            statusCode: 404,
+            title: "Board Game Not Found",
+            type: "https://httpstatuses.com/404"
+            );
+        }
+
         return Ok(value);
       }
 
@@ -39,6 +52,37 @@ namespace DataCaching.RestApi.Controllers
       //    // ...etc
       //  }
       //}
+    }
+
+    public override ObjectResult Problem(
+      string? detail = null,
+      string? instance = null,
+      int? statusCode = null,
+      string? title = null,
+      string? type = null,
+      IDictionary<string, object?>? extensions = null)
+    {
+      var problemDetails = new ErrorResponseDetails
+      {
+        Detail = detail,
+        Instance = instance,
+        Status = statusCode ?? 500,
+        Title = title,
+        Type = type,
+      };
+
+      if (extensions is not null)
+      {
+        foreach (var extension in extensions)
+        {
+          problemDetails.Extensions.Add(extension);
+        }
+      }
+
+      return new ObjectResult(problemDetails)
+      {
+        StatusCode = problemDetails.Status
+      };
     }
   }
 }

@@ -6,6 +6,7 @@ using Caching.DataContract.DbaseContext;
 using Caching.Shared.Services;
 using Caching.Shared.Services.Interfaces;
 using DataCaching.RestApi.Configurations;
+using DataCaching.RestApi.Middlewares;
 using DataCaching.RestApi.Services;
 using DataCaching.RestApi.Services.Interfaces;
 using Serilog;
@@ -61,8 +62,8 @@ namespace DataCaching.RestApi
       app.UseHttpsRedirection();
 
       app.UseAuthorization();
-
-
+      // Register the middleware after building WebApplication, before MapControllers()
+      app.UseCustomRequestLogging();
       app.MapControllers();
 
       app.Run();
