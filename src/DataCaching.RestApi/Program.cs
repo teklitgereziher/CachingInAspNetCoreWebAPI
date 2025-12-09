@@ -60,10 +60,12 @@ namespace DataCaching.RestApi
       }
 
       app.UseHttpsRedirection();
-
-      app.UseAuthorization();
       // Register the middleware after building WebApplication, before MapControllers()
       app.UseCustomRequestLogging();
+      app.UseSerilogRequestLogging();
+
+      app.UseAuthorization();
+
       app.MapControllers();
 
       app.Run();

@@ -9,7 +9,7 @@ namespace DataCaching.RestApi.Middlewares
     // WebApplication fluent extension for minimal hosting
     public static WebApplication UseCustomRequestLogging(this WebApplication app)
     {
-      app.UseMiddleware<RequestLoggingMiddleware>();
+      app.UseMiddleware<CorrelationContextMiddleware>();
       return app;
     }
   }
